@@ -1,0 +1,65 @@
+{% extends "auctions/layout.html" %}
+
+{% block nav %}
+    <li class="li_a dropdown" style="float:right">
+    <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
+    <div class="dropdown-content">
+        
+        {% for listing in listings %}
+                    <a href="{% url 'listing' listing.id %}">{{listing.title}}</a>
+        {% endfor %}
+    </div>
+    </li>
+{% endblock %}
+
+{% block body %}
+    <h2>{{ header }}</h2>
+    {% for listing in listings %}
+    <br>
+    <div class = "container_fluid jumbotron">
+        <h1>{{listing.id}}. <a href="{% url 'listing' listing.id %}">{{listing.title}}</a> </h1>
+        <div style = "font-family: Monospace;"> Listed By: <b>{{listing.user}}</b></div>
+        <p style = "color:rgb(8, 8, 8); font-family:'Courier New', Courier, monospace">{{listing.description}}</p>
+        {% if listing.img_url %}
+            <div><img style = "width: 300px;" src = "{{listing.img_url}}" alt=""></div>
+        {% endif %}
+        <p>Base Price: $ <span style =  "font-weight:bold; font-size:large">{{listing.base_bid}}</span></p>
+        {% for bid in bids %}
+            {% if bid.listing == listing %}
+                <p>Current Bid: $ <span style = "color:green; font-weight:bold; font-size:large">{{bid.price}}</span></p>
+            {% endif %}
+         {% endfor %}
+    </div>
+    {% endfor %}
+    <br>
+    <h2 >{{ in_header }}</h2>
+    {% for listing in in_listings %}
+    <br>
+    <div class = "container-fluid">
+        <h1 style = "color:red;">{{listing.id}}. <a style = "color:red;" href="{% url 'listing' listing.id %}">{{listing.title}}</a></h1>
+        <div style = "color:red; font-family: Monospace;"> Listed By: <b>{{listing.user}}</b></div>
+        <p style = "color:red; font-family:'Courier New', Courier, monospace">{{listing.description}}</p>
+        {% if listing.img_url %}
+            <div><img style = "width: 300px;" src = "{{listing.img_url}}" alt=""></div>
+        {% endif %}
+        <p style =  "color:red;">Base Price: $ <span style =  "color:red; font-weight:bold; font-size:large">{{listing.base_bid}}</span></p>
+    </div>
+    {% endfor %}
+    TODO
+    <div class="categories">
+        <div class="small-container">
+            <div class="row">
+                {% for listing in listings %}
+                    {% if listing.img_url %}
+                        <div class = "col-4">
+                            <img src="{{listing.img_url}}">
+                            <h4 style = "color:red;"><a style = "color:red;" href="{% url 'listing' listing.id %}">{{listing.title}}</a></h4>
+                        </div>
+                    {% endif %} 
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+

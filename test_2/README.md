@@ -1,0 +1,1 @@
+This is a simple e-commerce bidding page, where you can Login to add your item or bid for an item.
